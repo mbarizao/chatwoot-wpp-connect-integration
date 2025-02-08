@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: chatwoot-wpp-integration
+    restart: always
+    environment:
+      # 🔹 Configurações do Chatwoot & WPPConnect
+      WPP_CONNECT_URL: "https://wppconnect.domain.com"
+      CHATWOOT_URL: "https://chatwoot.domain.com"
+      CHATWOOT_TOKEN: "seu_token_aqui"
+      WPP_CONNECT_KEY: "sua_chave_aqui"
+    ports:
+      - "3000:3000"
+
