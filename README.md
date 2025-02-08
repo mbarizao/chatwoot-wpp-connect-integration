@@ -6,21 +6,15 @@ Este guia explica como configurar e rodar a integração entre **Chatwoot** e **
 
 ## 🚀 **Instalação**
 
-### 1️⃣ **Clone o repositório**
-```sh
-git clone https://github.com/mbarizao/chatwoot-wpp-connect-integration.git
-cd chatwoot-wpp-connect-integration
-```
-
-### 2️⃣ **Configuração do Docker**
-Edite o arquivo `docker-compose.yml` com suas credenciais:
+### 1️⃣ **Criando um `docker-compose.yml` para executar a imagem do Docker Hub**
+Crie um arquivo `docker-compose.yml` com o seguinte conteúdo:
 
 ```yaml
 version: "3.8"
 
 services:
   app:
-    build: .
+    image: mbarizao/chatwoot-wpp-connect-integration:latest
     container_name: chatwoot-wpp-integration
     restart: always
     environment:
@@ -33,15 +27,14 @@ services:
       - "3000:3000"
 ```
 
-### 3️⃣ **Suba o container**
-
-Execute um dos comandos abaixo para iniciar o serviço:
+### 2️⃣ **Subindo o container**
+Execute o seguinte comando para iniciar o serviço:
 ```sh
-docker-compose up -d --build
+docker-compose up -d
 ```
 **ou**
 ```sh
-docker compose up -d --build
+docker compose up -d
 ```
 
 ---
@@ -53,13 +46,13 @@ O token do Chatwoot é o **token do usuário administrador logado**. Para obtê-
 1. Acesse o painel do **Chatwoot**.
 2. Vá até **Configurações do Perfil**.
 3. Copie o **Token de acesso** exibido.
-4. Utilize este token na variável `CHATWOOT_TOKEN` do `.env` ou `docker-compose.yml`.
+4. Utilize este token na variável `CHATWOOT_TOKEN` no `docker-compose.yml`.
 
 ### **Token do WPPConnect**
 O token do WPPConnect é definido durante a instalação do serviço. Para obtê-lo:
 1. Verifique o arquivo de configuração do WPPConnect (`config.ts`).
 2. Procure pela variável **secretKey**.
-3. Copie e utilize esse token na variável `WPP_CONNECT_KEY` no `.env` ou `docker-compose.yml`.
+3. Copie e utilize esse token na variável `WPP_CONNECT_KEY` no `docker-compose.yml`.
 
 ---
 
