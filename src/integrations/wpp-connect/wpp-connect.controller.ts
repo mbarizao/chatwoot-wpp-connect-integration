@@ -1,7 +1,8 @@
-import { Controller, Post, Body, Logger } from '@nestjs/common';
+import { Controller, Post, Body, Logger, Param } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { WppConnectService } from './wpp-connect.service';
 import { ChatwootWebhookDto } from './dto/chatwoot-webhook.dto';
+import { ChatwootWebhookParamDto } from './dto/chatwoot-webhook-param.dto';
 
 @Controller('webhook')
 @ApiTags('webhook')
@@ -9,10 +10,12 @@ export class WppConnectController {
   private readonly logger = new Logger(WppConnectController.name);
   constructor(private readonly wppConnectService: WppConnectService) {}
 
-  @Post('chatwoot')
+  @Post('chatwoot/:accountName')
   @ApiOperation({ summary: 'Recebe mensagens do Chatwoot e inicia sessão' })
-  async handleChatwootMessage(@Body() body: ChatwootWebhookDto) {
+  async handleChatwootMessage(@Body() body: ChatwootWebhookDto, @Param() params: ChatwootWebhookParamDto) {
     try {
+      const { accountName } = params;
+
       this.logger.debug('Recebendo webhook do Chatwoot');
 
       const messageContent = body.messages[0]?.content?.trim();
@@ -40,7 +43,7 @@ export class WppConnectController {
       const accountId = body.messages[0].account_id;
 
       this.logger.debug('Iniciando a sessão');
-      await this.wppConnectService.startWppSession(channelKey, inboxId, accountId);
+      await this.wppConnectService.startWppSession(accountName, channelKey, inboxId, accountId);
 
       return { status: 'success', message: 'Sessão iniciada com sucesso.' };
     } catch (error) {

@@ -6,6 +6,13 @@ export interface IConfig {
     momentTimeZone: string;
     prefix?: string;
   };
+  database: {
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+    name: string;
+  },
   chatwoot: {
     wppConnectUrl: string;
     chatwootUrl: string;

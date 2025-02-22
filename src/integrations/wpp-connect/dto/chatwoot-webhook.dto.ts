@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, IsObject, IsOptional, IsBoolean } from 'class-validator';
+import { IsString, IsNumber, IsObject } from 'class-validator';
 
 class ContactInboxDto {
   @ApiProperty({ example: 66 })
@@ -24,7 +24,7 @@ class MessageDto {
   @IsNumber()
   id: number;
 
-  @ApiProperty({ example: '/qrcode' })
+  @ApiProperty({ example: '/start hello_world' })
   @IsString()
   content: string;
 
